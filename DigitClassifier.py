@@ -1,7 +1,8 @@
 import numpy as np
 import cv2
+import ImageProcessing
 
-def train_classifier
+def train_classifier():
 	img = cv2.imread('digits.png')
 	gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
@@ -33,4 +34,15 @@ def train_classifier
 	accuracy = correct*100.0/result.size
 	print "The accuracy of the classifier is: " + str(accuracy) + "%."
 
-train_classifier()
+	return knn
+
+knnClassifier = train_classifier()
+
+ImageProcessing.run()
+resized_image = cv2.imread("ResizedImage.png")
+
+test_image = resized_image.reshape(-1,400).astype(np.float32) # Size = (2500,400)
+ret,result,neighbours,dist = knnClassifier.findNearest(test_image,k=3)
+
+print "The nearest neighbours are: " + str(neighbours)
+print "The classifier classified the digit as: " + str(ret)
